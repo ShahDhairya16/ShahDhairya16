@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shah Dhairya — Data Scientist</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #00ff9d;
+    --green-dim: #00cc7a;
+    --bg: #050a07;
+    --bg2: #0a120d;
+    --bg3: #0f1a12;
+    --text: #c8f5d8;
+    --text-dim: #6a9e7a;
+    --border: #1a3a22;
+    --mono: 'Space Mono', monospace;
+    --display: 'Syne', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--mono); overflow-x: hidden; }
+  body::before {
+    content: '';
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,157,0.015) 2px, rgba(0,255,157,0.015) 4px);
+    pointer-events: none; z-index: 9999;
+  }
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(5,10,7,0.92); border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 60px;
+  }
+  .logo { font-family: var(--display); font-size: 18px; font-weight: 800; color: var(--green); letter-spacing: 2px; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 12px; letter-spacing: 1px; transition: color 0.2s; cursor: pointer; }
+  .nav-links a:hover { color: var(--green); }
+  section { padding: 5rem 3rem; max-width: 1100px; margin: 0 auto; }
+  #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 80px; position: relative; }
+  .hero-tag { font-size: 11px; letter-spacing: 3px; color: var(--green); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px; }
+  .hero-tag::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--green); }
+  h1.name { font-family: var(--display); font-size: clamp(3rem, 8vw, 6rem); font-weight: 800; line-height: 1; color: #fff; margin-bottom: 0.5rem; text-shadow: 0 0 40px rgba(0,255,157,0.15); }
+  h1.name span { color: var(--green); }
+  .hero-role { font-size: 13px; letter-spacing: 4px; color: var(--text-dim); margin-bottom: 2rem; text-transform: uppercase; }
+  .hero-bio { max-width: 480px; font-size: 13px; line-height: 2; color: var(--text-dim); margin-bottom: 3rem; }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { padding: 12px 28px; background: var(--green); color: #000; border: none; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 2px; cursor: pointer; transition: all 0.2s; }
+  .btn-primary:hover { background: var(--green-dim); transform: translateY(-2px); }
+  .btn-outline { padding: 12px 28px; background: transparent; color: var(--green); border: 1px solid var(--green); font-family: var(--mono); font-size: 12px; letter-spacing: 2px; cursor: pointer; transition: all 0.2s; }
+  .btn-outline:hover { background: rgba(0,255,157,0.08); transform: translateY(-2px); }
+  .hero-grid { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 380px; height: 380px; opacity: 0.15; pointer-events: none; }
+  .cursor { display: inline-block; width: 10px; height: 1.1em; background: var(--green); vertical-align: text-bottom; animation: blink 1s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .section-label { font-size: 11px; letter-spacing: 4px; color: var(--green); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 8px; }
+  .section-label::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--green); }
+  h2.section-title { font-family: var(--display); font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 2.5rem; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .about-text { font-size: 13px; line-height: 2.2; color: var(--text-dim); }
+  .about-text p + p { margin-top: 1rem; }
+  .edu-box { background: var(--bg2); border: 1px solid var(--border); padding: 1.5rem; margin-top: 1.5rem; border-left: 3px solid var(--green); }
+  .edu-label { font-size: 10px; letter-spacing: 3px; color: var(--green); margin-bottom: 6px; }
+  .edu-degree { font-family: var(--display); font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .edu-college { font-size: 12px; color: var(--text-dim); }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .stat-box { background: var(--bg2); border: 1px solid var(--border); padding: 1.5rem; transition: border-color 0.2s; }
+  .stat-box:hover { border-color: var(--green); }
+  .stat-num { font-family: var(--display); font-size: 2.5rem; font-weight: 800; color: var(--green); }
+  .stat-label { font-size: 11px; letter-spacing: 2px; color: var(--text-dim); margin-top: 4px; }
+  .skills-outer { background: var(--bg2); }
+  .skills-inner { max-width: 1100px; margin: 0 auto; padding: 5rem 3rem; }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1rem; }
+  .skill-card { background: var(--bg3); border: 1px solid var(--border); padding: 1.5rem; transition: all 0.3s; position: relative; overflow: hidden; }
+  .skill-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--green); transition: height 0.3s; }
+  .skill-card:hover::before { height: 100%; }
+  .skill-card:hover { border-color: rgba(0,255,157,0.3); transform: translateY(-3px); }
+  .skill-icon { font-size: 20px; margin-bottom: 12px; }
+  .skill-name { font-family: var(--display); font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .skill-level { font-size: 11px; color: var(--green); letter-spacing: 2px; margin-bottom: 12px; }
+  .skill-bar { height: 2px; background: var(--border); }
+  .skill-bar-fill { height: 100%; background: var(--green); }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .tag { font-size: 10px; padding: 3px 8px; border: 1px solid var(--border); color: var(--text-dim); letter-spacing: 1px; }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .project-card { background: var(--bg2); border: 1px solid var(--border); padding: 2rem; transition: all 0.3s; cursor: pointer; position: relative; }
+  .project-card:hover { border-color: var(--green); transform: translateY(-4px); }
+  .project-num { font-size: 11px; color: var(--green); letter-spacing: 2px; margin-bottom: 1rem; }
+  .project-title { font-family: var(--display); font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 0.75rem; }
+  .project-desc { font-size: 12px; line-height: 1.9; color: var(--text-dim); margin-bottom: 1.25rem; }
+  .project-tech { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tech-pill { font-size: 10px; padding: 4px 10px; background: rgba(0,255,157,0.08); color: var(--green); letter-spacing: 1px; border: 1px solid rgba(0,255,157,0.2); }
+  .project-arrow { position: absolute; top: 1.5rem; right: 1.5rem; color: var(--text-dim); font-size: 16px; transition: color 0.2s; }
+  .project-card:hover .project-arrow { color: var(--green); }
+  .contact-outer { background: var(--bg2); }
+  .contact-inner-wrap { max-width: 1100px; margin: 0 auto; padding: 5rem 3rem; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .contact-text p { font-size: 13px; line-height: 2; color: var(--text-dim); }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: var(--bg3); border: 1px solid var(--border); transition: all 0.2s; cursor: pointer; text-decoration: none; }
+  .contact-link:hover { border-color: var(--green); }
+  .cl-icon { font-size: 14px; color: var(--green); font-family: var(--mono); min-width: 24px; }
+  .cl-label { font-size: 11px; color: var(--text-dim); letter-spacing: 2px; }
+  .cl-value { font-size: 12px; color: #fff; margin-top: 2px; word-break: break-all; }
+  footer { border-top: 1px solid var(--border); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-dim); letter-spacing: 1px; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .revealed { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { gap: 1rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-grid { display: none; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">DHAIRYA.DS</div>
+  <div class="nav-links">
+    <a onclick="goto('about')">ABOUT</a>
+    <a onclick="goto('skills')">SKILLS</a>
+    <a onclick="goto('projects')">PROJECTS</a>
+    <a onclick="goto('contact')">CONTACT</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <svg class="hero-grid" viewBox="0 0 380 380" fill="none">
+    <defs>
+      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#00ff9d" stroke-width="0.5"/>
+      </pattern>
+    </defs>
+    <rect width="380" height="380" fill="url(#grid)"/>
+    <circle cx="190" cy="190" r="120" stroke="#00ff9d" stroke-width="0.5" fill="none"/>
+    <circle cx="190" cy="190" r="80" stroke="#00ff9d" stroke-width="0.5" fill="none"/>
+    <circle cx="190" cy="190" r="40" stroke="#00ff9d" stroke-width="0.5" fill="none"/>
+    <line x1="190" y1="0" x2="190" y2="380" stroke="#00ff9d" stroke-width="0.5"/>
+    <line x1="0" y1="190" x2="380" y2="190" stroke="#00ff9d" stroke-width="0.5"/>
+  </svg>
+  <div class="hero-tag">AVAILABLE FOR OPPORTUNITIES</div>
+  <h1 class="name">SHAH<br><span>DHAIRYA</span></h1>
+  <div class="hero-role">Data Scientist &amp; ML Engineer</div>
+  <p class="hero-bio">
+    Engineering graduate from LJ Institute of Engineering and Technology, passionate about turning raw data into intelligent systems. I build ML models, craft data visualizations, and extract insights that drive decisions.
+    <span class="cursor"></span>
+  </p>
+  <div class="hero-ctas">
+    <button class="btn-primary" onclick="goto('projects')">VIEW PROJECTS</button>
+    <button class="btn-outline" onclick="goto('contact')">HIRE ME</button>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="reveal">
+    <div class="section-label">01 / ABOUT</div>
+    <h2 class="section-title">Who I Am</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a Data Science enthusiast and fresh BE graduate with a passion for machine learning — from the math behind gradient descent to deploying predictive models in production.</p>
+        <p>My toolkit spans Python, SQL, Java, and visualization tools like Power BI and Tableau. I don't just build models — I communicate findings in ways that non-technical stakeholders actually understand.</p>
+        <p>Currently seeking full-time roles in Data Science, ML Engineering, or Data Analytics where I can contribute, grow, and build things that matter.</p>
+        <div class="edu-box">
+          <div class="edu-label">EDUCATION</div>
+          <div class="edu-degree">Bachelor of Engineering</div>
+          <div class="edu-college">LJ Institute of Engineering and Technology</div>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-box"><div class="stat-num">5</div><div class="stat-label">PROJECTS BUILT</div></div>
+        <div class="stat-box"><div class="stat-num">3+</div><div class="stat-label">YEARS PYTHON</div></div>
+        <div class="stat-box"><div class="stat-num">2</div><div class="stat-label">ML MODELS</div></div>
+        <div class="stat-box"><div class="stat-num">B.E.</div><div class="stat-label">ENGINEERING GRAD</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<div class="skills-outer">
+  <div class="skills-inner reveal" id="skills">
+    <div class="section-label">02 / SKILLS</div>
+    <h2 class="section-title">Tech Stack</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">&#x1F40D;</div>
+        <div class="skill-name">Python</div>
+        <div class="skill-level">ADVANCED</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div>
+        <div class="skill-tags"><span class="tag">Pandas</span><span class="tag">NumPy</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">&#x2615;</div>
+        <div class="skill-name">Java</div>
+        <div class="skill-level">INTERMEDIATE</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:65%"></div></div>
+        <div class="skill-tags"><span class="tag">OOP</span><span class="tag">DSA</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">&#x1F5C4;</div>
+        <div class="skill-name">SQL</div>
+        <div class="skill-level">ADVANCED</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:82%"></div></div>
+        <div class="skill-tags"><span class="tag">Queries</span><span class="tag">Joins</span><span class="tag">Aggregation</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">&#x1F4CA;</div>
+        <div class="skill-name">Data Viz</div>
+        <div class="skill-level">ADVANCED</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+        <div class="skill-tags"><span class="tag">Seaborn</span><span class="tag">Matplotlib</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">&#x1F9E0;</div>
+        <div class="skill-name">Machine Learning</div>
+        <div class="skill-level">INTERMEDIATE</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:75%"></div></div>
+        <div class="skill-tags"><span class="tag">Scikit-learn</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">&#x1F4F9;</div>
+        <div class="skill-name">BI Tools</div>
+        <div class="skill-level">INTERMEDIATE</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:72%"></div></div>
+        <div class="skill-tags"><span class="tag">Power BI</span><span class="tag">Tableau</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="reveal">
+    <div class="section-label">03 / PROJECTS</div>
+    <h2 class="section-title">What I've Built</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-arrow">&#x2197;</div>
+        <div class="project-num">PROJECT_01</div>
+        <div class="project-title">EzyHeal</div>
+        <div class="project-desc">A healthcare management platform designed to simplify doctor appointments, patient records, and symptom tracking. Built with a focus on accessibility and clean UX for both patients and providers.</div>
+        <div class="project-tech"><span class="tech-pill">Python</span><span class="tech-pill">SQL</span><span class="tech-pill">Pandas</span><span class="tech-pill">Healthcare</span></div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-arrow">&#x2197;</div>
+        <div class="project-num">PROJECT_02</div>
+        <div class="project-title">PulseCart</div>
+        <div class="project-desc">An e-commerce analytics system that tracks product performance, cart abandonment rates, and purchase trends. Includes dashboards built in Power BI to surface real-time business insights.</div>
+        <div class="project-tech"><span class="tech-pill">Python</span><span class="tech-pill">SQL</span><span class="tech-pill">Power BI</span><span class="tech-pill">E-Commerce</span></div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-arrow">&#x2197;</div>
+        <div class="project-num">PROJECT_03</div>
+        <div class="project-title">Java Stock Market Trading</div>
+        <div class="project-desc">A Java-based stock market simulator that models buying, selling, and portfolio management logic. Implements real-time price fluctuation simulation and trade history tracking using OOP principles.</div>
+        <div class="project-tech"><span class="tech-pill">Java</span><span class="tech-pill">OOP</span><span class="tech-pill">DSA</span><span class="tech-pill">Finance</span></div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-arrow">&#x2197;</div>
+        <div class="project-num">PROJECT_04</div>
+        <div class="project-title">Basic Cancer Prediction Model</div>
+        <div class="project-desc">A binary classification model trained on the Wisconsin Breast Cancer dataset to predict malignancy. Applied logistic regression and random forest with feature importance analysis using Scikit-learn.</div>
+        <div class="project-tech"><span class="tech-pill">Python</span><span class="tech-pill">Scikit-learn</span><span class="tech-pill">Pandas</span><span class="tech-pill">Healthcare AI</span></div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-arrow">&#x2197;</div>
+        <div class="project-num">PROJECT_05</div>
+        <div class="project-title">Basic Pricing Model</div>
+        <div class="project-desc">A regression-based dynamic pricing model that predicts optimal product prices based on demand signals, competition data, and historical sales. Visualized pricing trends using Matplotlib and Seaborn.</div>
+        <div class="project-tech"><span class="tech-pill">Python</span><span class="tech-pill">Scikit-learn</span><span class="tech-pill">Matplotlib</span><span class="tech-pill">Regression</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-outer">
+  <div class="contact-inner-wrap reveal" id="contact">
+    <div class="section-label">04 / CONTACT</div>
+    <div class="contact-grid">
+      <div class="contact-text">
+        <h2 class="section-title">Let's Build<br>Something.</h2>
+        <p>I'm actively seeking Data Science, ML Engineering, and Analytics roles. If you're working on interesting problems — let's talk. I respond within 24 hours.</p>
+        <br>
+        <button class="btn-primary" style="margin-top:1rem;" onclick="window.open('mailto:dhairyashah332@gmail.com')">GET IN TOUCH</button>
+      </div>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:dhairyashah332@gmail.com">
+          <div class="cl-icon">@</div>
+          <div><div class="cl-label">EMAIL</div><div class="cl-value">dhairyashah332@gmail.com</div></div>
+        </a>
+        <a class="contact-link" href="https://www.linkedin.com/in/dhairya-shah-15537530b" target="_blank">
+          <div class="cl-icon">in</div>
+          <div><div class="cl-label">LINKEDIN</div><div class="cl-value">linkedin.com/in/dhairya-shah-15537530b</div></div>
+        </a>
+        <a class="contact-link" href="https://github.com/ShahDhairya16" target="_blank">
+          <div class="cl-icon">&lt;/&gt;</div>
+          <div><div class="cl-label">GITHUB</div><div class="cl-value">github.com/ShahDhairya16</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>SHAH DHAIRYA — DATA SCIENTIST</span>
+  <span>LJ INSTITUTE OF ENGINEERING & TECHNOLOGY</span>
+</footer>
+
+<script>
+  function goto(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
